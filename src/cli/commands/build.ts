@@ -7,6 +7,8 @@ export const builder = {
 }
 export function handler(argv: any) {
     // Just testing... not going to be the final thing, obviously.
+
+    // This is a test commit, please ignore
     
     const convert = (ts: string): string => {
         let lines = ts.split('\n');
