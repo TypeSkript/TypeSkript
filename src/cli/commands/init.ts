@@ -12,7 +12,7 @@ export const builder = {
 export function handler(argv: any) {
     const DIR = `${process.cwd()}/${argv.dir}`;
     console.log(DIR);
-    !fs.existsSync('./src/') && fs.mkdirSync('./src/', { recursive: true });
+    !fs.existsSync(`${DIR}/src/`) && fs.mkdirSync(`${DIR}/src/`, { recursive: true });
     fs.writeFileSync(path.join(DIR, 'tskconfig.json'), JSON.stringify({}));
     fs.writeFileSync(path.join(DIR, 'src', 'index.ts'), 'console.log(\'Hello World!\');');
 }
