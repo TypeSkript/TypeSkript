@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Project } from '../../project/Project';
+import * as babelParser from '@babel/parser';
 
 export const command = 'build';
 export const desc = 'Build a TypeSkript project from the current directory';
@@ -26,19 +27,27 @@ export function handler(argv: any) {
     //     return result;
     // }
 
-    // !fs.existsSync('./dist/') && fs.mkdirSync('./dist/', { recursive: true });
-    // const copyDirectory = (dir: string): void => {
-    //     fs.readdirSync(`./src${dir}/`, {withFileTypes: true}).forEach(file => {
-    //         if(file.isFile()) fs.writeFileSync(`./dist${dir}/${file.name}`.replace('.ts', '.sk'), convert(fs.readFileSync(`./src${dir}/${file.name}`).toString()));
-    //         if(file.isDirectory()) {
-    //             !fs.existsSync(`./dist${dir}/${file.name}`) && fs.mkdirSync(`./dist${dir}/${file.name}`, { recursive: true });
-    //             copyDirectory(`${dir}/${file.name}`);
-    //         }
-    //     });
-    // }
-    // copyDirectory('');
+    
 
     const project = new Project(JSON.parse(fs.readFileSync('./tskconfig.json').toString()));
 
-    console.log(project._config);
+    console.log(project.config);
+    console.log(project);
+
+    const convert = (ts: string): string => {
+        return JSON.stringify(babelParser.parse(ts));
+    }
+
+    !fs.existsSync('./dist/') && fs.mkdirSync('./dist/', { recursive: true });
+    !fs.existsSync('./dist/') && fs.mkdirSync('./dist/', { recursive: true });
+    const copyDirectory = (dir: string): void => {
+        fs.readdirSync(`./src${dir}/`, {withFileTypes: true}).forEach(file => {
+            if(file.isFile()) fs.writeFileSync(`./dist${dir}/${file.name}`.replace('.ts', '.sk'), convert(fs.readFileSync(`./src${dir}/${file.name}`).toString()));
+            if(file.isDirectory()) {
+                !fs.existsSync(`./dist${dir}/${file.name}`) && fs.mkdirSync(`./dist${dir}/${file.name}`, { recursive: true });
+                copyDirectory(`${dir}/${file.name}`);
+            }
+        });
+    }
+    copyDirectory('');
 }

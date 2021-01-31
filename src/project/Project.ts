@@ -1,8 +1,8 @@
-import ts, { CompilerOptions } from "byots";
+import ts, { CompilerOptions } from "typescript";
 import { ProjectConfig } from "../shared/types/ProjectConfig";
 
 export class Project {
-    public readonly _config: ProjectConfig;
+    private readonly _config: ProjectConfig;
     private readonly _compilerOptions: CompilerOptions;
 
     constructor(config: ProjectConfig) {
@@ -16,7 +16,11 @@ export class Project {
             typeRoots: this._config.pluginsDir,
             resolveJsonModule: true,
             rootDir: this._config.srcDir,
-            outDir: this._config.distDir
+            outDir: this._config.outDir
         };
+    }
+
+    get config() {
+        return this._config;
     }
 }

@@ -2,7 +2,7 @@ import { ProjectType } from "./ProjectType";
 
 export interface ProjectConfig {
     srcDir: string;
-    distDir: string;
+    outDir: string;
     pluginsDir: string[];
     type: ProjectType;
 }
